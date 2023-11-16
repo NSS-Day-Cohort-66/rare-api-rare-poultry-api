@@ -1,0 +1,13 @@
+[
+    {
+        "model": "rareapi.rareusers",
+        "pk": 1,
+        "fields": {
+            "bio": "I'm just like some guy, you know.",
+            "profile_image_url": "https://pbs.twimg.com/profile_images/1279103276055539712/6pcd9iFM_400x400.jpg",
+            "created_on": "2023-11-15 18:00",
+            "active": true,
+            "user_id": 1
+        }
+    }
+]
