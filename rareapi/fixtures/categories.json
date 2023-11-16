@@ -8,7 +8,7 @@
   },
   {
     "model": "rareapi.Categories",
-    "pk": 1,
+    "pk": 2,
     "fields": {
       "label": "Lifestyle"
     }
