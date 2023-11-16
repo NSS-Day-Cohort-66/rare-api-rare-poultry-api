@@ -18,7 +18,7 @@ def login_user(request):
 
     # Use the built-in authenticate method to verify
     # authenticate returns the user object or None if no user is found
-    authenticated_user = authenticate(email=email, password=password)
+    authenticated_user = authenticate(username=email, password=password)
 
     # If authentication was successful, respond with their token
     if authenticated_user is not None:
@@ -45,8 +45,7 @@ def register_user(request):
     # Create a new user by invoking the `create_user` helper method
     # on Django's built-in User model
     new_user = User.objects.create_user(
-        email=request.data['email'],
-        username=request.data['username'],
+        username=request.data['email'],
         password=request.data['password'],
         first_name=request.data['first_name'],
         last_name=request.data['last_name']
