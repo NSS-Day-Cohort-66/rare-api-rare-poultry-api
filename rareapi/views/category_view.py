@@ -4,7 +4,7 @@ from rest_framework import serializers, status
 from rareapi.models import Categories
 
 class CategoryView(ViewSet):
-    def list(self):
+    def list(self, request):
         """Handle GET requests to get all Categories
         
         Returns:
