@@ -4,3 +4,5 @@ from .tags import Tags
 from .posts import Posts
 from .postTags import PostTags
 from .comments import Comments
+from .reactions import Reactions
+from .postReactions import PostReactions
