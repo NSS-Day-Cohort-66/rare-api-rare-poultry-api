@@ -3,3 +3,4 @@ from .rareUsers import RareUsers
 from .tags import Tags
 from .posts import Posts
 from .postTags import PostTags
+from .comments import Comments
