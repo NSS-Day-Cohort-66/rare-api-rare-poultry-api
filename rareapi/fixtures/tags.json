@@ -1,0 +1,142 @@
+[
+    {
+        "model": "rareapi.tags",
+        "pk": 1,
+        "fields": {
+            "label": "Humor"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 2,
+        "fields": {
+            "label": "Technology"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 3,
+        "fields": {
+            "label": "Science"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 4,
+        "fields": {
+            "label": "Art"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 5,
+        "fields": {
+            "label": "Travel"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 6,
+        "fields": {
+            "label": "Food"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 7,
+        "fields": {
+            "label": "Fitness"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 8,
+        "fields": {
+            "label": "Books"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 9,
+        "fields": {
+            "label": "Movies"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 10,
+        "fields": {
+            "label": "Music"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 11,
+        "fields": {
+            "label": "Fashion"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 12,
+        "fields": {
+            "label": "Sports"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 13,
+        "fields": {
+            "label": "History"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 14,
+        "fields": {
+            "label": "Nature"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 15,
+        "fields": {
+            "label": "Gaming"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 16,
+        "fields": {
+            "label": "Education"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 17,
+        "fields": {
+            "label": "Health"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 18,
+        "fields": {
+            "label": "Pets"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 19,
+        "fields": {
+            "label": "Business"
+        }
+    },
+    {
+        "model": "rareapi.tags",
+        "pk": 20,
+        "fields": {
+            "label": "Politics"
+        }
+    }
+]
