@@ -8,5 +8,5 @@ class Posts(models.Model):
     approved = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey('Categories', on_delete=models.CASCADE)
-    content = models.CharField()
+    content = models.CharField(max_length=3000)
     tags = models.ManyToManyField('Tags', through='PostTags', related_name='posts')
