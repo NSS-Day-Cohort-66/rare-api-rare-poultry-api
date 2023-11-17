@@ -10,6 +10,6 @@ class TagSerializer(serializers.ModelSerializer):
 
 class TagView(viewsets.ViewSet):
     def list(self, request):
-        tags = Tags.objects.all()
+        tags = Tags.objects.all().order_by('label')
         serialized = TagSerializer(tags, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
