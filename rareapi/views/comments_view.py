@@ -10,7 +10,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class CommentView(viewsets.ViewSet):
     def list(self, request):
-        comments = Comments.objects.all()
+        comments = Comments.objects.all().order_by('created_on')
         serialized = CommentSerializer(comments, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
     
