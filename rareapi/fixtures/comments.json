@@ -1,0 +1,23 @@
+[
+    {
+      "model": "rareapi.comments",
+      "pk": 1,
+      "fields": {
+        "post": 1,
+        "author": 1,
+        "content": "Terrific",
+        "created_on": "2023-11-16"
+      }
+    },
+    {
+      "model": "rareapi.comments",
+      "pk": 2,
+      "fields": {
+        "post": 2,
+        "author": 1,
+        "content": "Insightful",
+        "created_on": "2023-11-17"
+      }
+    }
+  ]
+  

@@ -1,0 +1,19 @@
+[
+    {
+      "model": "rareapi.reactions",
+      "pk": 1,
+      "fields": {
+        "label": "Funny",
+        "image_url": "http://comedy.com/images/funny.png"
+      }
+    },
+    {
+      "model": "rareapi.reactions",
+      "pk": 2,
+      "fields": {
+        "label": "Happy",
+        "image_url": "http://cohort66.com/happy.png"
+      }
+    }
+  ]
+  
