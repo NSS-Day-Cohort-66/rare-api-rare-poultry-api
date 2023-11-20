@@ -1,12 +1,25 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets, serializers, status
 from rest_framework.response import Response
 from rareapi.models import Comments, Posts, RareUsers
 
+class UserRareUsersSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
 
-class CommentAuthorSerializer(serializers.ModelSerializer):
+    def get_full_name(self, obj):
+        return f'{obj.first_name} {obj.last_name}'
+
+    class Meta:
+        model = User
+        fields = ('full_name',)
+
+class RareUsersSerializer(serializers.ModelSerializer):
+    
+    user = UserRareUsersSerializer(many=False)
+
     class Meta:
         model = RareUsers
-        fields = ('user',)
+        fields = ('id','user',)
 
 class CommentPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,7 +28,7 @@ class CommentPostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     post = CommentPostSerializer(many=False)
-    author = CommentAuthorSerializer(many=False)
+    author = RareUsersSerializer(many=False)
     class Meta:
         model = Comments
         fields = ('id', 'post', 'author', 'content', 'created_on')
