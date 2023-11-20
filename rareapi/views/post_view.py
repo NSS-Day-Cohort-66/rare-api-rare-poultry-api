@@ -48,3 +48,7 @@ class PostView(ViewSet):
         serialized = PostSerializer(posts, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
+    def retrieve(self, request, pk=None):
+        single_post = Posts.objects.get(pk=pk)
+        post_serialized = PostSerializer(single_post)
+        return Response(post_serialized.data)
