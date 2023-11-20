@@ -26,7 +26,7 @@ class RareUsersView(ViewSet):
         Returns:
             Response -- JSON serialized list of rare_users
         """
-        rare_users = RareUsers.objects.all()
+        rare_users = RareUsers.objects.all().order_by('rare_username')
         serialized = RareUsersSerializer(rare_users, many=True)
         return Response(serialized.data)
 
@@ -46,7 +46,7 @@ class UserRareUsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('full_name', 'email', 'is_staff')
+        fields = ('full_name', 'email', 'is_staff',)
 
 class RareUsersSerializer(serializers.ModelSerializer):
     
