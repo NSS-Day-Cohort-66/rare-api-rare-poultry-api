@@ -56,6 +56,7 @@ def register_user(request):
     new_rare_user.user_id = new_user.id
     new_rare_user.bio = request.data.get('bio')
     new_rare_user.profile_image_url = request.data.get('profile_image_url')
+    new_rare_user.rare_username = request.data.get("rare_username")
     new_rare_user.save()
     # Use the REST Framework's token generator on the new user account
     token = Token.objects.create(user=new_user)
