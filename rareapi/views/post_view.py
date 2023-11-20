@@ -17,11 +17,19 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('author_name',)
 
+class RareUsersSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = RareUsers
+        fields = ('id','user',)
+
 class CommentsSerializer(serializers.ModelSerializer):
+    author = RareUsersSerializer(many=False)
 
     class Meta:
         model = Comments
-        fields = ('id', 'content', 'created_on')
+        fields = ('id', 'content', 'created_on', 'author',)
 
 
 class PostSerializer(serializers.ModelSerializer):
