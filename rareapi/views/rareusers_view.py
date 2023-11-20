@@ -32,14 +32,18 @@ class RareUsersView(ViewSet):
 
 class UserRareUsersSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+
+    def get_email(self, obj):
+        return f'{obj.username}'
 
     def get_full_name(self, obj):
         return f'{obj.first_name} {obj.last_name}'
 
     class Meta:
         model = User
-        fields = ('full_name',)
-        
+        fields = ('full_name', 'email',)
+
 class RareUsersSerializer(serializers.ModelSerializer):
     
     user = UserRareUsersSerializer(many=False)
