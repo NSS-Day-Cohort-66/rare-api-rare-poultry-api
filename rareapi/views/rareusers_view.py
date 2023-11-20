@@ -33,16 +33,20 @@ class RareUsersView(ViewSet):
 class UserRareUsersSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
+    is_staff = serializers.SerializerMethodField()
 
     def get_email(self, obj):
         return f'{obj.username}'
 
     def get_full_name(self, obj):
         return f'{obj.first_name} {obj.last_name}'
+    
+    def get_is_staff(self, obj):
+        return f'{obj.is_staff}'
 
     class Meta:
         model = User
-        fields = ('full_name', 'email',)
+        fields = ('full_name', 'email', 'is_staff')
 
 class RareUsersSerializer(serializers.ModelSerializer):
     
