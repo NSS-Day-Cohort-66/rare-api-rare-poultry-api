@@ -1,9 +1,10 @@
+from django.contrib.auth.models import User
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.utils import timezone
-from rareapi.models import Posts
-from django.contrib.auth.models import User
+from rareapi.models import Posts, Comments, RareUsers
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,14 +17,29 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('author_name',)
 
+class RareUsersSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = RareUsers
+        fields = ('id','user',)
+
+class CommentsSerializer(serializers.ModelSerializer):
+    author = RareUsersSerializer(many=False)
+
+    class Meta:
+        model = Comments
+        fields = ('id', 'content', 'created_on', 'author',)
+
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(source='user', read_only=True)
     category_name = serializers.CharField(source='category.label', read_only=True)
+    comments = CommentsSerializer(many=True)
 
     class Meta:
         model = Posts
-        fields = ('id', 'author', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', )
+        fields = ('id', 'author', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments')
 
 
 class PostView(ViewSet):
