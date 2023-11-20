@@ -3,3 +3,4 @@ from .category_view import CategoryView
 from .tags_view import TagView
 from .comments_view import CommentView
 from .post_view import PostView
+from .rareusers_view import RareUsersView
