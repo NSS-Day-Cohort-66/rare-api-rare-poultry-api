@@ -38,18 +38,27 @@ class PostSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.label', read_only=True)
     comments = CommentsSerializer(many=True)
 
+        # Declare that an ad-hoc property should be included in JSON
+    is_owner = serializers.SerializerMethodField()
+
+    # Function containing instructions for ad-hoc property
+    def get_is_owner(self, obj):
+        # Check if the authenticated user is the owner
+        variable = False
+        return self.context['request'].user.id == obj.user_id
+
     class Meta:
         model = Posts
-        fields = ('id', 'user', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments')
- 
+        fields = ('id', 'user', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments', 'is_owner',)
+
 
 class PostView(ViewSet):
     def list(self, request):
         posts = Posts.objects.filter(approved=True, publication_date__lte=timezone.now()).order_by('-publication_date')
-        serialized = PostSerializer(posts, many=True)
+        serialized = PostSerializer(posts, many=True, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
         single_post = Posts.objects.get(pk=pk)
-        post_serialized = PostSerializer(single_post)
+        post_serialized = PostSerializer(single_post, context={'request': request})
         return Response(post_serialized.data)

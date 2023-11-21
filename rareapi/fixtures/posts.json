@@ -1,30 +1,44 @@
 [
-    {
-        "model": "rareapi.posts",
-        "pk": 1,
-        "fields": {
-            "user": 1,
-            "category": 1,
-            "title": "Sample Post Number One",
-            "publication_date": "2022-11-11",
-            "image_url": "http://example.com/firstimage.jpg",
-            "content": "This is the content of the first post.",
-            "approved": true,
-            "tags": [1,3,5]
-        }
-    },
-    {
-        "model": "rareapi.posts",
-        "pk": 2,
-        "fields": {
-            "user": 1,
-            "category": 2,
-            "title": "Sample Post Number Two",
-            "publication_date": "2022-11-12",
-            "image_url": "http://example.com/secondimage.jpg",
-            "content": "This is the content of the second post.",
-            "approved": false,
-            "tags": [2,4,6]
-        }
+  {
+    "model": "rareapi.posts",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "category": 1,
+      "title": "Sample Post Number One",
+      "publication_date": "2022-11-11",
+      "image_url": "http://example.com/firstimage.jpg",
+      "content": "This is the content of the first post.",
+      "approved": true,
+      "tags": [1, 3, 5]
     }
+  },
+  {
+    "model": "rareapi.posts",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "category": 2,
+      "title": "Sample Post Number Two",
+      "publication_date": "2022-11-12",
+      "image_url": "http://example.com/secondimage.jpg",
+      "content": "This is the content of the second post.",
+      "approved": false,
+      "tags": [2, 4, 6]
+    }
+  },
+  {
+    "model": "rareapi.posts",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "category": 2,
+      "title": "Sample Post Number Three",
+      "publication_date": "2022-11-13",
+      "image_url": "https://resources.stuff.co.nz/content/dam/images/1/g/m/8/5/4/image.related.StuffLandscapeSixteenByNine.710x400.1gm7sv.png/1484266477628.jpg?format=pjpg&optimize=medium",
+      "content": "This is the content of the third post.",
+      "approved": true,
+      "tags": [2, 4, 6]
+    }
+  }
 ]
