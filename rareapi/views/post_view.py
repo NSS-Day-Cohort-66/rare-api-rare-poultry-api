@@ -53,3 +53,25 @@ class PostView(ViewSet):
         single_post = Posts.objects.get(pk=pk)
         post_serialized = PostSerializer(single_post)
         return Response(post_serialized.data)
+    
+    def create(self, request):
+        title = request.data.get('title')
+        publication_date = request.data.get('publication_date')
+        image_url = request.data.get('image_url')
+        category_id = request.data.get('category')
+        content = request.data.get('content')
+
+        post = Posts.objects.create(
+            user=request.user.rareusers,
+            title=title,
+            publication_date=publication_date,
+            image_url=image_url,
+            category_id=category_id,
+            content=content,
+            approved=True)
+        
+        tags_ids = request.data.get('tags', [])
+        post.tags.set(tags_ids)
+
+        serializer = PostSerializer(post, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
