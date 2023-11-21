@@ -46,7 +46,7 @@ class UserRareUsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'full_name', 'email', 'is_staff',)
+        fields = ('full_name', 'email', 'is_staff',)
 
 class RareUsersSerializer(serializers.ModelSerializer):
     
@@ -54,4 +54,4 @@ class RareUsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RareUsers
-        fields = ('bio', 'profile_image_url', 'created_on', 'active', 'rare_username', 'user',)
+        fields = ('id', 'bio', 'profile_image_url', 'created_on', 'active', 'rare_username', 'user',)
