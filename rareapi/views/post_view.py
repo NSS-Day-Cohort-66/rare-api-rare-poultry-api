@@ -18,11 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('author_name',)
 
 class RareUsersSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = UserSerializer(many=False)  
 
     class Meta:
         model = RareUsers
-        fields = ('id','user',)
+        fields = ('id', 'user',)
+
 
 class CommentsSerializer(serializers.ModelSerializer):
     author = RareUsersSerializer(many=False)
@@ -33,13 +34,13 @@ class CommentsSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = UserSerializer(source='user', read_only=True)
+    user = RareUsersSerializer(many=False)
     category_name = serializers.CharField(source='category.label', read_only=True)
     comments = CommentsSerializer(many=True)
 
     class Meta:
         model = Posts
-        fields = ('id', 'author', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments')
+        fields = ('id', 'user', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments')
 
 
 class PostView(ViewSet):
