@@ -41,7 +41,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Posts
         fields = ('id', 'user', 'category_name', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'comments')
-
+ 
 
 class PostView(ViewSet):
     def list(self, request):
