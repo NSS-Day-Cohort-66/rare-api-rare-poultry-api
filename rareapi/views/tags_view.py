@@ -42,3 +42,13 @@ class TagView(viewsets.ViewSet):
 
         except Tags.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    def destroy(self, request, pk=None):
+        try:
+            tag = Tags.objects.get(pk=pk)
+            tag.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except Tags.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
