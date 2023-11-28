@@ -3,6 +3,12 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from rareapi.models import Categories
 
+class CategorySerializer(serializers.ModelSerializer):
+    """JSON serializer for types"""
+    class Meta:
+        model = Categories
+        fields = ('id', 'label', )
+
 class CategoryView(ViewSet):
     def list(self, request):
         """Handle GET requests to get all Categories
@@ -16,9 +22,12 @@ class CategoryView(ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
     
     def retrieve(self, request, pk=None):
-        category = Categories.objects.get(pk=pk)
-        serialized = CategorySerializer(category)
-        return Response(serialized.data, status=status.HTTP_200_OK)
+        try:
+            category = Categories.objects.get(pk=pk)
+            serialized = CategorySerializer(category)
+            return Response(serialized.data, status=status.HTTP_200_OK)
+        except Categories.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     
     def create(self, request):
         category = Categories()
@@ -41,9 +50,13 @@ class CategoryView(ViewSet):
         
         except Categories.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def destroy(self, request, pk=None):
+        try:
+            category = Categories.objects.get(pk=pk)
+            category.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
         
-class CategorySerializer(serializers.ModelSerializer):
-    """JSON serializer for types"""
-    class Meta:
-        model = Categories
-        fields = ('id', 'label', )
+        except Categories.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

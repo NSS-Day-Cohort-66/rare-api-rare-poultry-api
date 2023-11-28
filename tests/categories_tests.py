@@ -51,7 +51,7 @@ class CategoryTests(APITestCase):
         self.assertEqual(json_response[0]["label"], "Funny")
         self.assertEqual(json_response[1]["label"], "Lifestyle")
 
-    def test_change_tags(self):
+    def test_change_categories(self):
         category = Categories()
         category.label = "Hobbies"
         category.save()
@@ -66,12 +66,12 @@ class CategoryTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json_response["label"], "Wellness")
 
-    # def test_delete_tag(self):
-    #     category = Categories()
-        # category.label = "Hobbies"
-        # category.save()
-
-    #     response = self.client.delete(f"/categories/{category.id}")
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    #     response = self.client.get(f"/categories/{category.id}")
-    #     self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+    def test_delete_categories(self):
+        category = Categories()
+        category.label = "Hobbies"
+        category.save()
+        
+        response = self.client.delete(f"/categories/{category.id}")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        response = self.client.get(f"/categories/{category.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
