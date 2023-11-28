@@ -11,24 +11,14 @@ class RareUsersTests(APITestCase):
 
     def setUp(self):
         self.user = User.objects.first()
+        self.rare_user = RareUsers.objects.get(user=self.user)
         token = Token.objects.get(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {token.key}")
 
 
     def test_get_rare_user(self):
-        # rare_user = RareUsers()
-        # rare_user.bio = "Test Bio"
-        # rare_user.profile_image_url = "Test URL"
-        # rare_user.created_on = "2023-11-15T18:00:00Z"
-        # rare_user.active = True
-        # rare_user.rare_username = "Test Username"
-        # rare_user.user.full_name = "Firstname Lastname"
-        # rare_user.user.email = "test@test.com"
-        # rare_user.user.is_staff = False
 
-        # rare_user.save()
-
-        response = self.client.get("/users/1")
+        response = self.client.get(f"/users/{self.rare_user.id}")
 
         json_response = json.loads(response.content)
 
@@ -43,5 +33,24 @@ class RareUsersTests(APITestCase):
         self.assertEqual(json_response["user"]["email"], "me@me.com")
         self.assertEqual(json_response["user"]["is_staff"], "False")
 
+    def test_get_rare_users(self):
+        test_user = User.objects.create_user(
+        username='test@test.com',
+        password='abc123',
+        first_name="Testy",
+        last_name="Testerson"
+    )
+        test_rare_user = RareUsers()
+        test_rare_user.user_id = test_user.id
+        test_rare_user.bio = "Test Bio"
+        test_rare_user.profile_image_url = "www.test.com"
+        test_rare_user.rare_username = "McTester"
+        test_rare_user.save()
+
+        response = self.client.get("/users")
+
+        json_response = json.loads(response.content)
+
+        self.assertEqual
 
 
