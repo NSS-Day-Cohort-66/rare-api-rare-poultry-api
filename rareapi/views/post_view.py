@@ -44,7 +44,6 @@ class PostSerializer(serializers.ModelSerializer):
     # Function containing instructions for ad-hoc property
     def get_is_owner(self, obj):
         # Check if the authenticated user is the owner
-        variable = False
         return self.context['request'].user.id == obj.user_id
 
     class Meta:
@@ -84,3 +83,4 @@ class PostView(ViewSet):
 
         serializer = PostSerializer(post, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
