@@ -1,5 +1,5 @@
 """View module for handling requests about rare_users"""
-from rest_framework import serializers, status
+from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from django.contrib.auth.models import User
