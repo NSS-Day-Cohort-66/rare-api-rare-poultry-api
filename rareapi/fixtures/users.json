@@ -16,5 +16,23 @@
             "groups": [],
             "user_permissions": []
         }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$ekiWW2IhQ3TxY4YuS08j9q$m+tpCJ2FxR451lcIUHpajBkNH2YVq5w+T9z08nuxySc=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admina@straytor.com",
+            "first_name": "Admina",
+            "last_name": "Straytor",
+            "email": "admina@straytor.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-08-28T14:51:39.989Z",
+            "groups": [],
+            "user_permissions": []
+        }
     }
 ]

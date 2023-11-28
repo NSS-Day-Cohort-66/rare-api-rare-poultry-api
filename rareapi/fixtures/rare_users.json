@@ -7,7 +7,20 @@
             "profile_image_url": "https://pbs.twimg.com/profile_images/1279103276055539712/6pcd9iFM_400x400.jpg",
             "created_on": "2023-11-15 18:00",
             "active": true,
-            "user_id": 1
+            "user_id": 1,
+            "rare_username": "Cool Guy"
+        }
+    },
+    {
+        "model": "rareapi.rareusers",
+        "pk": 2,
+        "fields": {
+            "bio": "I'm Pajama Sam",
+            "profile_image_url": "https://pbs.twimg.com/profile_images/1279103276055539712/6pcd9iFM_400x400.jpg",
+            "created_on": "2023-11-10 14:00",
+            "active": true,
+            "user_id": 2,
+            "rare_username": "Pajama Sam"
         }
     }
 ]
