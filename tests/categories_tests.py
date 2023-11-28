@@ -1,8 +1,8 @@
 import json
 from rest_framework import status
 from rest_framework.test import APITestCase
-from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 from rareapi.models import Categories
 
 class CategoryTests(APITestCase):
@@ -42,15 +42,14 @@ class CategoryTests(APITestCase):
         self.assertEqual(json_response["id"], category.id)
         
     def test_get_categories(self):
-        category = Categories()
-        category.label = "Hobbies"
-        category.save()
+        response = self.client.get("/categories")
 
-        response = self.client.get(f"/categories/{category.id}")
         json_response = json.loads(response.content)
+
         self.assertEqual(response.status_code,status.HTTP_200_OK)
-        self.assertEqual(json_response["label"], "Hobbies")
-        self.assertEqual(json_response["id"], category.id)
+
+        self.assertEqual(json_response[0]["label"], "Funny")
+        self.assertEqual(json_response[1]["label"], "Lifestyle")
 
     def test_change_tags(self):
         category = Categories()
