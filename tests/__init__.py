@@ -1,0 +1,1 @@
+from .categories_tests import CategoryTests
