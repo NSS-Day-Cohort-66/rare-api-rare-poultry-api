@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from rareapi.models import Categories
 
 class CategoryTests(APITestCase):
 
@@ -29,6 +28,3 @@ class CategoryTests(APITestCase):
 
         self.assertEqual(json_response["label"], "Music")
         self.assertEqual(json_response["id"], 3)
-
-        
-        
