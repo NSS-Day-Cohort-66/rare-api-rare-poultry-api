@@ -16,9 +16,12 @@ class TagView(viewsets.ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
     # List one tag
     def retrieve(self, request, pk=None):
-        tag = Tags.objects.get(pk=pk)
-        serialized = TagSerializer(tag)
-        return Response(serialized.data, status=status.HTTP_200_OK)
+        try:
+            tag = Tags.objects.get(pk=pk)
+            serialized = TagSerializer(tag)
+            return Response(serialized.data, status=status.HTTP_200_OK)
+        except Tags.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     # Create a tag
     def create(self, request):
         tag = Tags()
