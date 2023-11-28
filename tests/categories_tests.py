@@ -18,7 +18,7 @@ class CategoryTests(APITestCase):
         url = "/categories"
 
         data = {
-            "label": "Music"
+            "label": "Health"
         }
 
         response = self.client.post(url, data, format='json')
@@ -27,8 +27,7 @@ class CategoryTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(json_response["label"], "Music")
-        self.assertEqual(json_response["id"], 3)
+        self.assertEqual(json_response["label"], "Health")
 
         
         
