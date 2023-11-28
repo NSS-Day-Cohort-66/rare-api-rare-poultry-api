@@ -28,6 +28,3 @@ class CategoryTests(APITestCase):
 
         self.assertEqual(json_response["label"], "Music")
         self.assertEqual(json_response["id"], 3)
-
-        
-        
