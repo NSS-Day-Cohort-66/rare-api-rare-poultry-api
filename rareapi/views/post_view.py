@@ -6,6 +6,10 @@ from django.utils import timezone
 from rareapi.models import Posts, Comments, RareUsers
 
 
+class PostUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Posts
+        fields = ('id', 'user', 'title', 'image_url', 'approved', 'category', 'content', 'tags' )
 
 class UserSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
@@ -90,15 +94,24 @@ class PostView(ViewSet):
     def update(self, request, pk=None):
         try:
             post = Posts.objects.get(pk=pk)
-            serializer = PostSerializer(post, data=request.data, context={'request': request})
+            serializer = PostUpdateSerializer(post, data=request.data, context={'request': request})
             if serializer.is_valid():
+                post.user = serializer.validated_data['user']
+                post.title = serializer.validated_data['title']
+                post.image_url = serializer.validated_data['image_url']
+                post.category_id = serializer.validated_data['category']
+                post.content = serializer.validated_data['content']
+                post.approved = serializer.validated_data['approved']
                 post.save()
-                serializer = PostSerializer(post, context={'request': request})
+                tags_ids = serializer.validated_data.get('tags', [])
+                post.tags.set(tags_ids)
+                serializer = PostUpdateSerializer(post, context={'request': request})
+                return Response(None, status.HTTP_204_NO_CONTENT)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                # return Response(None, status=status.HTTP_204_NO_CONTENT)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
     
         except Posts.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
