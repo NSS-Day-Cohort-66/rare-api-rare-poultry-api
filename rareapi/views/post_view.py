@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.utils import timezone
-from rareapi.models import Posts, Comments, RareUsers
+from rareapi.models import Posts, Comments, RareUsers, Tags
 
 
 
@@ -32,11 +32,18 @@ class CommentsSerializer(serializers.ModelSerializer):
         model = Comments
         fields = ('id', 'content', 'created_on', 'author',)
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tags
+        fields = ('id', 'label',)
+
+
 
 class PostSerializer(serializers.ModelSerializer):
     user = RareUsersSerializer(many=False)
     category_name = serializers.CharField(source='category.label', read_only=True)
     comments = CommentsSerializer(many=True)
+    tags = TagSerializer(many=True)
 
         # Declare that an ad-hoc property should be included in JSON
     is_owner = serializers.SerializerMethodField()
