@@ -58,9 +58,12 @@ class PostView(ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
-        single_post = Posts.objects.get(pk=pk)
-        post_serialized = PostSerializer(single_post, context={'request': request})
-        return Response(post_serialized.data)
+        try:
+            single_post = Posts.objects.get(pk=pk)
+            post_serialized = PostSerializer(single_post, context={'request': request})
+            return Response(post_serialized.data)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     
     def create(self, request):
         title = request.data.get('title')
@@ -84,3 +87,29 @@ class PostView(ViewSet):
         serializer = PostSerializer(post, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+    def update(self, request, pk=None):
+        try:
+            post = Posts.objects.get(pk=pk)
+            serializer = PostSerializer(post, data=request.data, context={'request': request})
+            if serializer.is_valid():
+                post.save()
+                serializer = PostSerializer(post, context={'request': request})
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                # return Response(None, status=status.HTTP_204_NO_CONTENT)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    
+    def destroy(self, request, pk=None):
+        try:
+            post = Posts.objects.get(pk=pk)
+            post.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
