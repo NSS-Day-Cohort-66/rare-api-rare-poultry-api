@@ -40,3 +40,21 @@ class CommentsView(viewsets.ViewSet):
         comment = Comments.objects.get(pk=pk)
         serialized = CommentSerializer(comment)
         return Response(serialized.data, status=status.HTTP_200_OK)
+    
+    def create (self, request):
+
+        post_id = request.data.get('post')
+        author_id = request.data.get('author')
+
+        # Fetch the related Post and Author objects
+        post = Posts.objects.get(pk=post_id)
+        author = RareUsers.objects.get(pk=author_id)
+
+        comment = Comments()
+        comment.post = post
+        comment.author = author
+        comment.content = request.data.get('content')
+        comment.save()
+
+        serialized = CommentSerializer(comment, many=False)
+        return Response(serialized.data, status=status.HTTP_201_CREATED) 
