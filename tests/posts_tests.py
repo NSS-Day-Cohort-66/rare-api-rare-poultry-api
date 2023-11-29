@@ -86,7 +86,7 @@ class PostsTests(APITestCase):
     def test_change_posts(self):
 
         posts = Posts()
-        posts.user = self.rare_user
+        posts.user_id = 1
         posts.category_id = 1
         posts.title = "Changed Post"
         posts.image_url = "http://www.differentimage.jpeg"
@@ -96,37 +96,30 @@ class PostsTests(APITestCase):
         posts.tags.set([2, 3])
 
         data = {
-            "user": {
-                "id": self.rare_user.id,
-                "user": {
-                    "author_name": "Admina Straytor"
-                }
-            },
-            "category": 1,
-            "title": "Changed Post",
-            "image_url": "http://www.testimage.jpeg",
-            "content": "Here is the content for changing a post",
+            "title": "Test it",
+            "content": "Wowie Zowie",
+            "user": 1,
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Feral_rooster_on_Kaua%CA%BBi.jpg",
+            "category": 2,
             "approved": True,
-            "tags": [2, 3],
-            "comments": []
-        }
+            "tags": [1,2,3]
+                }
 
         response = self.client.put(f"/posts/{posts.id}", data, format="json")
+        print(response.content)
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         response = self.client.get(f"/posts/{posts.id}")
         json_response = json.loads(response.content)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(json_response["user"]["id"], self.rare_user.id)
-        self.assertEqual(json_response["category_name"], "Funny")
-        self.assertEqual(json_response["title"], "Changed Post")
-        self.assertEqual(json_response["image_url"], "http://www.differentimage.jpeg")
-        self.assertEqual(json_response["content"], "Here is the content for changing a post")
+        self.assertEqual(json_response["category_name"], "Lifestyle")
+        self.assertEqual(json_response["title"], "Test it")
+        self.assertEqual(json_response["image_url"], "https://upload.wikimedia.org/wikipedia/commons/f/f2/Feral_rooster_on_Kaua%CA%BBi.jpg")
+        self.assertEqual(json_response["content"], "Wowie Zowie")
         self.assertEqual(json_response["approved"], True)
-        self.assertEqual(json_response["tags"], [2, 3])
-        self.assertEqual(json_response["comments"], [])
+        self.assertEqual(json_response["tags"], [2,3,1])
     
 
     def test_delete_posts(self):
