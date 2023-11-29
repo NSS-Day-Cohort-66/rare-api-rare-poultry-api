@@ -44,7 +44,7 @@ class CommentsView(viewsets.ViewSet):
     def create (self, request):
 
         post_id = request.data.get('post')
-        author_id = request.data.get('author')
+        author_id = request.user.id
 
         # Fetch the related Post and Author objects
         post = Posts.objects.get(pk=post_id)
