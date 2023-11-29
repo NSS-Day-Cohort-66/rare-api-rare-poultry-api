@@ -23,7 +23,7 @@ class PostsTests(APITestCase):
             "user": self.rare_user.id,
             "category": 1,
             "title": "New Test Post",
-            "image_url": "www.testimage.jpeg",
+            "image_url": "http://www.testimage.jpeg",
             "content": "Here is the content for test post",
             "approved": True,
             "tags": [2, 4],
@@ -38,7 +38,7 @@ class PostsTests(APITestCase):
         self.assertEqual(json_response["user"]["id"], self.rare_user.id)
         self.assertEqual(json_response["category_name"], "Funny")
         self.assertEqual(json_response["title"], "New Test Post")
-        self.assertEqual(json_response["image_url"], "www.testimage.jpeg")
+        self.assertEqual(json_response["image_url"], "http://www.testimage.jpeg")
         self.assertEqual(json_response["content"], "Here is the content for test post")
         self.assertEqual(json_response["approved"], True)
         self.assertEqual(json_response["tags"], [2, 4])
@@ -51,7 +51,7 @@ class PostsTests(APITestCase):
         posts.user = self.rare_user
         posts.category_id = 1
         posts.title = "Different Post"
-        posts.image_url = "www.differentimage.jpeg"
+        posts.image_url = "http://www.differentimage.jpeg"
         posts.content = "Testing get posts"
         posts.approved = True
         posts.save()
@@ -64,14 +64,92 @@ class PostsTests(APITestCase):
         self.assertEqual(json_response["user"]["id"], self.rare_user.id)
         self.assertEqual(json_response["category_name"], "Funny")
         self.assertEqual(json_response["title"], "Different Post")
-        self.assertEqual(json_response["image_url"], "www.differentimage.jpeg")
+        self.assertEqual(json_response["image_url"], "http://www.differentimage.jpeg")
         self.assertEqual(json_response["content"], "Testing get posts")
         self.assertEqual(json_response["approved"], True)
         self.assertEqual(json_response["tags"], [2, 3])
         self.assertEqual(json_response["comments"], [])
 
 
-    def test_
+    def test_get_all_posts(self):
+        response = self.client.get("/posts")
+
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertEqual(json_response[0]["title"], "Sample Post Number Three")
+        self.assertEqual(json_response[1]["title"], "Sample Post Number One")
+
+
+
+    def test_change_posts(self):
+
+        posts = Posts()
+        posts.user = self.rare_user
+        posts.category_id = 1
+        posts.title = "Changed Post"
+        posts.image_url = "http://www.differentimage.jpeg"
+        posts.content = "Here is the content for changing a post"
+        posts.approved = True
+        posts.save()
+        posts.tags.set([2, 3])
+
+        data = {
+            "user": {
+                "id": self.rare_user.id,
+                "user": {
+                    "author_name": "Admina Straytor"
+                }
+            },
+            "category": 1,
+            "title": "Changed Post",
+            "image_url": "http://www.testimage.jpeg",
+            "content": "Here is the content for changing a post",
+            "approved": True,
+            "tags": [2, 3],
+            "comments": []
+        }
+
+        response = self.client.put(f"/posts/{posts.id}", data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        response = self.client.get(f"/posts/{posts.id}")
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json_response["user"]["id"], self.rare_user.id)
+        self.assertEqual(json_response["category_name"], "Funny")
+        self.assertEqual(json_response["title"], "Changed Post")
+        self.assertEqual(json_response["image_url"], "http://www.differentimage.jpeg")
+        self.assertEqual(json_response["content"], "Here is the content for changing a post")
+        self.assertEqual(json_response["approved"], True)
+        self.assertEqual(json_response["tags"], [2, 3])
+        self.assertEqual(json_response["comments"], [])
+    
+
+    def test_delete_posts(self):
+
+        posts = Posts()
+        posts.user = self.rare_user
+        posts.category_id = 1
+        posts.title = "Changed Post"
+        posts.image_url = "http://www.differentimage.jpeg"
+        posts.content = "Here is the content for changing a post"
+        posts.approved = True
+        posts.save()
+        posts.tags.set([2, 3])
+        
+        response = self.client.delete(f"/posts/{posts.id}")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        response = self.client.get(f"/posts/{posts.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+
+
 
 
 
