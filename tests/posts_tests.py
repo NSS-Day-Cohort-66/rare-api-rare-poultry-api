@@ -41,7 +41,7 @@ class PostsTests(APITestCase):
         self.assertEqual(json_response["image_url"], "http://www.testimage.jpeg")
         self.assertEqual(json_response["content"], "Here is the content for test post")
         self.assertEqual(json_response["approved"], True)
-        self.assertEqual(json_response["tags"], [2, 4])
+        self.assertEqual(json_response["tags"], [{'id': 2, 'label': 'Technology'}, {'id': 4, 'label': 'Art'}])
         self.assertEqual(json_response["comments"], [])
 
 
@@ -67,7 +67,7 @@ class PostsTests(APITestCase):
         self.assertEqual(json_response["image_url"], "http://www.differentimage.jpeg")
         self.assertEqual(json_response["content"], "Testing get posts")
         self.assertEqual(json_response["approved"], True)
-        self.assertEqual(json_response["tags"], [2, 3])
+        self.assertEqual(json_response["tags"], [{'id': 2, 'label': 'Technology'}, {'id': 3, 'label': 'Science'}])
         self.assertEqual(json_response["comments"], [])
 
 
@@ -119,7 +119,7 @@ class PostsTests(APITestCase):
         self.assertEqual(json_response["image_url"], "https://upload.wikimedia.org/wikipedia/commons/f/f2/Feral_rooster_on_Kaua%CA%BBi.jpg")
         self.assertEqual(json_response["content"], "Wowie Zowie")
         self.assertEqual(json_response["approved"], True)
-        self.assertEqual(json_response["tags"], [2,3,1])
+        self.assertEqual(json_response["tags"], [{'id': 2, 'label': 'Technology'}, {'id': 3, 'label': 'Science'}, {'id': 1, 'label': 'Humor'}])
     
 
     def test_delete_posts(self):
