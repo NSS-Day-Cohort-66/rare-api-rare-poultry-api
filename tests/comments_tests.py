@@ -37,3 +37,19 @@ class CommentsTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json_response["content"], "Edited Comment")
+
+    def test_create_comment(self):
+        data = {
+            "post": 1,
+            "author": self.rare_user.id,
+            "content": "test"
+        }
+
+        response = self.client.post("/comments", data, format='json')
+
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(json_response['post'], 1)
+        self.assertEqual(json_response['author'], self.rare_user.id)
+        self.assertEqual(json_response['content'], "test")
