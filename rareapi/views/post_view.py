@@ -103,7 +103,7 @@ class PostView(ViewSet):
                 post.content = serializer.validated_data['content']
                 post.approved = serializer.validated_data['approved']
                 post.save()
-                tags_ids = serializer.validated_data.get('tags', [])
+                tags_ids = request.data.get('tags', [])
                 post.tags.set(tags_ids)
                 serializer = PostUpdateSerializer(post, context={'request': request})
                 return Response(None, status.HTTP_204_NO_CONTENT)
