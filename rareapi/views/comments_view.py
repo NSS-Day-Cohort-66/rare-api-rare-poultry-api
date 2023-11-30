@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets, serializers, status
 from rest_framework.response import Response
+from django.core.exceptions import PermissionDenied
 from rareapi.models import Comments, Posts, RareUsers
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -36,10 +37,12 @@ class CommentsView(viewsets.ViewSet):
         Returns:
             Response -- JSON serialized type record
         """
-
-        comment = Comments.objects.get(pk=pk)
-        serialized = CommentSerializer(comment)
-        return Response(serialized.data, status=status.HTTP_200_OK)
+        try:
+            comment = Comments.objects.get(pk=pk)
+            serialized = CommentSerializer(comment)
+            return Response(serialized.data, status=status.HTTP_200_OK)
+        except Comments.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     
     def create (self, request):
 
@@ -58,3 +61,17 @@ class CommentsView(viewsets.ViewSet):
 
         serialized = CommentSerializer(comment, many=False)
         return Response(serialized.data, status=status.HTTP_201_CREATED) 
+    
+    def destroy(self, request, pk=None):
+        try:
+            comment = Comments.objects.get(pk=pk)
+
+            if request.user.rareusers.id != comment.author_id:
+                raise PermissionDenied("You do not have permission to delete this comment.")
+            
+            comment.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except Comments.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
