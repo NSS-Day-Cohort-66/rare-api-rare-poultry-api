@@ -53,3 +53,16 @@ class CommentsTests(APITestCase):
         self.assertEqual(json_response['post'], 1)
         self.assertEqual(json_response['author'], self.rare_user.id)
         self.assertEqual(json_response['content'], "test")
+
+    def test_delete_comment(self):
+        comment = Comments()
+        comment.post_id = 1
+        comment.author_id = 1
+        comment.content = "Original Comment"
+        comment.save()
+
+        response = self.client.delete(f"/comments/{comment.id}")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        response = self.client.get(f"/comments/{comment.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
