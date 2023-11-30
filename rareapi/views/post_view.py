@@ -3,6 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.utils import timezone
+from django.core.exceptions import PermissionDenied
 from rareapi.models import Posts, Comments, RareUsers, Tags
 
 
@@ -127,6 +128,10 @@ class PostView(ViewSet):
     def destroy(self, request, pk=None):
         try:
             post = Posts.objects.get(pk=pk)
+
+            if request.user.rareusers.id != post.user_id:
+                raise PermissionDenied("You do not have permission to delete this post.")
+            
             post.delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
